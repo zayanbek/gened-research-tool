@@ -1,10 +1,15 @@
 import "./Header.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="header">
       <div className="header__left">
-        <div className="header__logo">🎓</div>
+        <button className="header__logo" onClick={() => navigate("/")}>
+          🎓
+        </button>
 
         <div>
           <h1 className="header__title">Gen-Ed Research Tool</h1>
