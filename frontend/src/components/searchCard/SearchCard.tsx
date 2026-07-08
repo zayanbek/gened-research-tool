@@ -4,7 +4,8 @@ import SubjectFilter from "../searchFilters/SubjectFilter";
 import CourseNumberFilter from "../searchFilters/CourseNumberFilter";
 import CourseNameFilter from "../searchFilters/CourseNameFilter";
 import GpaRangeFilter from "../searchFilters/GpaRangeFilter";
-import OfferedThisTermFilter from "../searchFilters/OfferedThisTermFilter";
+// import OfferedThisTermFilter from "../searchFilters/OfferedThisTermFilter";
+import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
 
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +24,9 @@ export default function SearchCard() {
 
       <GpaRangeFilter />
 
-      <OfferedThisTermFilter />
+      {/* <OfferedThisTermFilter /> */}
+
+      <GenedCategoryFilter />
 
       <div className="search-card__buttons">
         <button className="secondary">Reset</button>
