@@ -1,15 +1,21 @@
-import Header from "../../components/header/Header";
-import Sidebar from "../../components/sidebar/Sidebar";
-
 import "./SearchResults.css";
 
-export default function Home() {
+import Header from "../../components/header/Header";
+import Sidebar from "../../components/sidebar/Sidebar";
+import ResultsCard from "../../components/resultsCard/ResultsCard";
+
+export default function SearchResults() {
   return (
     <div className="page">
       <Header />
 
-      <main className="home">
+      <main className="search-results">
         <Sidebar />
+
+        <section className="search-results__content">
+          <ResultsCard />
+          <ResultsCard />
+        </section>
       </main>
     </div>
   );
