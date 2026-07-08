@@ -1,0 +1,50 @@
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+
+  padding: 24px;
+
+  background: var(--card);
+  color: var(--card-foreground);
+
+  border-right: 1px solid var(--border);
+
+  overflow-y: auto;
+}
+
+.sidebar__title {
+  margin: 0 0 24px;
+
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.sidebar__buttons {
+  display: flex;
+  gap: 12px;
+
+  margin-top: 32px;
+}
+
+.sidebar__buttons button {
+  flex: 1;
+
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: var(--radius);
+
+  cursor: pointer;
+
+  font-weight: 500;
+}
+
+.sidebar__buttons .primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.sidebar__buttons .secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
