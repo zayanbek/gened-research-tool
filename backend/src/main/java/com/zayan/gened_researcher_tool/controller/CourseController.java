@@ -1,5 +1,6 @@
 package com.zayan.gened_researcher_tool.controller;
 
+import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.service.CourseService;
 
@@ -21,7 +22,7 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<DistinctCourse> getCourses(
+    public List<CourseSearchDto> getCourses(
             @RequestParam(required = false) String subject,
             @RequestParam(required = false) Integer number,
             @RequestParam(required = false) Integer level,
