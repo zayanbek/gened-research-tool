@@ -2,45 +2,41 @@ package com.zayan.gened_researcher_tool.service;
 
 import com.zayan.gened_researcher_tool.entity.Subject;
 import com.zayan.gened_researcher_tool.repository.SubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Component
+@Service
 public class SubjectService {
 
-    private final SubjectRepository subjectRepository;
+    private final SubjectRepository repository;
 
-    @Autowired
-    public SubjectService(SubjectRepository subjectRepository) {
-        this.subjectRepository = subjectRepository;
+    public SubjectService(SubjectRepository repository) {
+        this.repository = repository;
     }
 
-    public List<Subject> getSubjects() {
-        return subjectRepository.findAll();
-    }
+    public List<Subject> searchSubjects(String code, String name) {
 
-    public List<Subject> getSubjectByCode(String code) {
-        return subjectRepository.findAll().stream()
-                .filter(subject -> subject.getCode().toLowerCase().contains(code.toLowerCase()))
-                .collect(Collectors.toList());
-    }
+        Specification<Subject> spec = Specification.unrestricted();
 
-    public List<Subject> getSubjectByName(String name) {
-        return subjectRepository.findAll().stream()
-                .filter(subject -> subject.getName().toLowerCase().contains(name.toLowerCase()))
-                .collect(Collectors.toList());
-    }
+        if (code != null && !code.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(
+                            cb.lower(root.get("code")),
+                            "%" + code.toLowerCase() + "%"
+                    ));
+        }
 
-    public List<Subject> getSubjectByCodeAndName(String code, String name) {
-        return subjectRepository.findAll().stream()
-                .filter(subject ->
-                        subject.getCode().toLowerCase().contains(code.toLowerCase())
-                    && subject.getName().toLowerCase().contains(name.toLowerCase())
-                )
-                .collect(Collectors.toList());
+        if (name != null && !name.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(
+                            cb.lower(root.get("name")),
+                            "%" + name.toLowerCase() + "%"
+                    ));
+        }
+
+        return repository.findAll(spec);
     }
 }
 
