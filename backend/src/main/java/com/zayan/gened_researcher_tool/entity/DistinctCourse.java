@@ -27,6 +27,9 @@ public class DistinctCourse {
     @OneToMany(mappedBy = "course")
     private List<CourseGenEd> genEds;
 
+    @Column(name="average_gpa")
+    private double averageGpa;
+
     public DistinctCourse() {
     }
 
@@ -76,5 +79,13 @@ public class DistinctCourse {
 
     public void setGenEds(List<CourseGenEd> genEds) {
         this.genEds = genEds;
+    }
+
+    public double getAverageGpa() {
+        return averageGpa;
+    }
+
+    public void setAverageGpa(double averageGpa) {
+        this.averageGpa = averageGpa;
     }
 }
