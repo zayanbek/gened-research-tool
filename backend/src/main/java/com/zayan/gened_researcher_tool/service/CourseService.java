@@ -1,8 +1,11 @@
 package com.zayan.gened_researcher_tool.service;
 
+import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
 import com.zayan.gened_researcher_tool.entity.CourseInformation;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.repository.CourseInformationRepository;
+import com.zayan.gened_researcher_tool.repository.DistinctCourseRepository;
+import org.hibernate.sql.ast.tree.expression.Distinct;
 import org.springframework.stereotype.Service;
 import org.springframework.data.jpa.domain.Specification;
 import com.zayan.gened_researcher_tool.entity.CourseGenEd;
@@ -19,13 +22,13 @@ import java.util.stream.Collectors;
 @Service
 public class CourseService {
     
-    private final CourseInformationRepository courseInformationRepository;
+    private final DistinctCourseRepository distinctCourseRepository;
 
-    public CourseService(CourseInformationRepository courseInformationRepository) {
-        this.courseInformationRepository = courseInformationRepository;
+    public CourseService(DistinctCourseRepository distinctCourseRepository) {
+        this.distinctCourseRepository = distinctCourseRepository;
     }
 
-    public List<DistinctCourse> searchCourses(
+    public List<CourseSearchDto> searchCourses(
             String subject,
             Integer number,
             Integer level,
@@ -35,12 +38,12 @@ public class CourseService {
             List<String> genEdCodes)
     {
 
-        Specification<CourseInformation> spec = Specification.unrestricted();
+        Specification<DistinctCourse> spec = Specification.unrestricted();
 
         if (subject != null && !subject.isBlank()) {
             spec = spec.and((root, query, cb) ->
                     cb.equal(
-                            cb.lower(root.get("course").get("subject")),
+                            cb.lower(root.get("subject")),
                             subject.toLowerCase()
                     ));
         }
@@ -48,7 +51,7 @@ public class CourseService {
         if (number != null) {
             spec = spec.and((root, query, cb) ->
                     cb.equal(
-                            root.get("course").get("number"),
+                            root.get("number"),
                             number
                     ));
         }
@@ -59,7 +62,7 @@ public class CourseService {
 
             spec = spec.and((root, query, cb) ->
                     cb.between(
-                            root.get("course").get("number"),
+                            root.get("number"),
                             min,
                             max
                     ));
@@ -68,7 +71,7 @@ public class CourseService {
         if (minGpa != null) {
             spec = spec.and((root, query, cb) ->
                     cb.greaterThanOrEqualTo(
-                            root.get("gpa"),
+                            root.get("averageGpa"),
                             minGpa
                     ));
         }
@@ -76,7 +79,7 @@ public class CourseService {
         if (maxGpa != null) {
             spec = spec.and((root, query, cb) ->
                     cb.lessThanOrEqualTo(
-                            root.get("gpa"),
+                            root.get("averageGpa"),
                             maxGpa
                     ));
         }
@@ -84,7 +87,7 @@ public class CourseService {
         if (title != null && !title.isBlank()) {
             spec = spec.and((root, query, cb) ->
                     cb.like(
-                            cb.lower(root.get("course").get("courseTitle")),
+                            cb.lower(root.get("courseTitle")),
                             "%" + title.toLowerCase() + "%"
                     ));
         }
@@ -107,11 +110,28 @@ public class CourseService {
             });
         }
 
-        return courseInformationRepository.findAll(spec)
+        List<DistinctCourse> courses = distinctCourseRepository.findAll(spec);
+
+        return courses.stream()
+                .map(this::toDto)
+                .toList();
+    }
+
+    private CourseSearchDto toDto(DistinctCourse course) {
+
+        List<String> genEdCodes = course.getGenEds()
                 .stream()
-                .map(CourseInformation::getCourse)
-                .distinct()
-                .collect(Collectors.toList());
+                .map(g -> g.getCategory().getCode())
+                .toList();
+
+        return new CourseSearchDto(
+                course.getId(),
+                course.getSubject(),
+                course.getNumber(),
+                course.getCourseTitle(),
+                course.getAverageGpa(),
+                genEdCodes
+        );
     }
 
 
