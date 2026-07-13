@@ -1,4 +1,4 @@
-import type { CourseSearchRequest } from "./CourseSearchRequest";
+import type { CourseSearchRequest } from "../types/CourseSearchRequest";
 
 export async function searchCourses(filters: CourseSearchRequest) {
   const params = new URLSearchParams();
