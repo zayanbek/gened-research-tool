@@ -1,15 +1,26 @@
 import "./ResultsCard.css";
 
-export default function ResultsCard() {
+import type { CourseSearchResult } from "../../types/CourseSearchResult";
+
+type ResultsCardProps = {
+  course: CourseSearchResult;
+};
+
+export default function ResultsCard({ course }: ResultsCardProps) {
   return (
     <aside className="results-card">
-      <label className="results-card__subject-code">MATH 421</label>
-      <h2 className="results-card__subject-name">Calculus III</h2>
+      <label className="results-card__subject-code">
+        {course.subject} {course.number}
+      </label>
+
+      <h2 className="results-card__subject-name">{course.title}</h2>
 
       <div className="results-card__geneds">
-        <span className="results-card__tag">QR2</span>
-        <span className="results-card__tag">HUM</span>
-        <span className="results-card__tag">NAT</span>
+        {course.genEdCodes.map((code) => (
+          <span key={code} className="results-card__tag">
+            {code}
+          </span>
+        ))}
       </div>
     </aside>
   );
