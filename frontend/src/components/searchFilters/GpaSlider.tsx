@@ -13,30 +13,37 @@ export default function GpaSlider({ values, setValues }: GpaSliderProps) {
       max={4}
       values={values}
       onChange={setValues}
-      renderTrack={({ props, children }) => (
-        <div
-          {...props}
-          className="gpa-slider__track"
-          style={{
-            ...props.style,
-            background: getTrackBackground({
-              values,
-              colors: [
-                "var(--secondary)",
-                "var(--primary)",
-                "var(--secondary)",
-              ],
-              min: 0,
-              max: 4,
-            }),
-          }}
-        >
-          {children}
-        </div>
-      )}
-      renderThumb={({ props }) => (
-        <div {...props} className="gpa-slider__thumb" />
-      )}
+      renderTrack={({ props, children }) => {
+        const { key, ...trackProps } = props;
+
+        return (
+          <div
+            key={key}
+            {...trackProps}
+            className="gpa-slider__track"
+            style={{
+              ...trackProps.style,
+              background: getTrackBackground({
+                values,
+                colors: [
+                  "var(--secondary)",
+                  "var(--primary)",
+                  "var(--secondary)",
+                ],
+                min: 0,
+                max: 4,
+              }),
+            }}
+          >
+            {children}
+          </div>
+        );
+      }}
+      renderThumb={({ props }) => {
+        const { key, ...thumbProps } = props;
+
+        return <div key={key} {...thumbProps} className="gpa-slider__thumb" />;
+      }}
     />
   );
 }

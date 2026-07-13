@@ -1,12 +1,14 @@
 import GpaSlider from "./GpaSlider";
 
 type GpaRangeFilterProps = {
-  values: number[];
-  onChange: (values: number[]) => void;
+  minGpa: number;
+  maxGpa: number;
+  onChange: (minGpa: number, maxGpa: number) => void;
 };
 
 export default function GpaRangeFilter({
-  values,
+  minGpa,
+  maxGpa,
   onChange,
 }: GpaRangeFilterProps) {
   return (
@@ -14,11 +16,14 @@ export default function GpaRangeFilter({
       <label>GPA Range</label>
 
       <div className="search-card__gpa-values">
-        <span>{values[0].toFixed(1)}</span>
-        <span>{values[1].toFixed(1)}</span>
+        <span>{minGpa.toFixed(1)}</span>
+        <span>{maxGpa.toFixed(1)}</span>
       </div>
 
-      <GpaSlider values={values} setValues={onChange} />
+      <GpaSlider
+        values={[minGpa, maxGpa]}
+        setValues={([min, max]) => onChange(min, max)}
+      />
     </div>
   );
 }
