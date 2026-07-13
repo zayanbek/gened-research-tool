@@ -1,7 +1,6 @@
 package com.zayan.gened_researcher_tool.controller;
 
 import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
-import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.service.CourseService;
 
 import org.springframework.web.bind.annotation.GetMapping;

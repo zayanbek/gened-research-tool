@@ -3,21 +3,13 @@ package com.zayan.gened_researcher_tool.service;
 import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
 import com.zayan.gened_researcher_tool.entity.CourseInformation;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
-import com.zayan.gened_researcher_tool.repository.CourseInformationRepository;
 import com.zayan.gened_researcher_tool.repository.DistinctCourseRepository;
-import org.hibernate.sql.ast.tree.expression.Distinct;
 import org.springframework.stereotype.Service;
 import org.springframework.data.jpa.domain.Specification;
 import com.zayan.gened_researcher_tool.entity.CourseGenEd;
-import com.zayan.gened_researcher_tool.entity.CourseInformation;
-import com.zayan.gened_researcher_tool.entity.DistinctCourse;
-import com.zayan.gened_researcher_tool.repository.CourseInformationRepository;
 import jakarta.persistence.criteria.Join;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
