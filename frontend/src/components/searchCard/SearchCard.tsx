@@ -4,35 +4,25 @@ import SubjectFilter from "../searchFilters/SubjectFilter";
 import CourseNumberFilter from "../searchFilters/CourseNumberFilter";
 import CourseNameFilter from "../searchFilters/CourseNameFilter";
 import GpaRangeFilter from "../searchFilters/GpaRangeFilter";
-// import OfferedThisTermFilter from "../searchFilters/OfferedThisTermFilter";
+import OfferedThisTermFilter from "../searchFilters/OfferedThisTermFilter";
 import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
-
-import { searchCourses } from "../../api/courses";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
 
 export default function SearchCard() {
   const navigate = useNavigate();
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<CourseSearchRequest>({
     subject: "",
-    courseNumber: "",
-    courseName: "",
-    gpaRange: [0, 4],
-    genEdCategories: [] as string[],
+    number: undefined,
+    level: undefined,
+    minGpa: 0,
+    maxGpa: 4,
+    title: "",
+    genEdCodes: [],
   });
-
-  async function handleSearch() {
-    const response = await searchCourses(filters);
-
-    navigate("/results", {
-      state: {
-        results: response,
-        filters,
-      },
-    });
-  }
 
   return (
     <aside className="search-card">
@@ -49,7 +39,7 @@ export default function SearchCard() {
       />
 
       <CourseNumberFilter
-        value={filters.courseNumber}
+        value={filters.number}
         onChange={(courseNumber) =>
           setFilters((prev) => ({
             ...prev,
@@ -59,7 +49,7 @@ export default function SearchCard() {
       />
 
       <CourseNameFilter
-        value={filters.courseName}
+        value={filters.title}
         onChange={(courseName) =>
           setFilters((prev) => ({
             ...prev,
@@ -68,24 +58,26 @@ export default function SearchCard() {
         }
       />
 
-      {/* <GpaRangeFilter
-        values={filters.gpaRange}
-        onChange={(gpaRange) =>
+      <GpaRangeFilter
+        minGpa={filters.minGpa}
+        maxGpa={filters.maxGpa}
+        onChange={(minGpa, maxGpa) =>
           setFilters((prev) => ({
             ...prev,
-            gpaRange,
+            minGpa,
+            maxGpa,
           }))
         }
-      /> */}
-
-      {/* <GenedCategoryFilter /> */}
+      />
 
       <div className="search-card__buttons">
         <button className="secondary">Reset</button>
         <button
           className="primary"
           onClick={() => {
-            handleSearch;
+            navigate("/results", {
+              state: filters,
+            });
           }}
         >
           Search
