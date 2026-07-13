@@ -5,10 +5,7 @@ type GpaSliderProps = {
   setValues: (values: number[]) => void;
 };
 
-export default function GpaSlider({
-  values,
-  setValues,
-}: GpaSliderProps) {
+export default function GpaSlider({ values, setValues }: GpaSliderProps) {
   return (
     <Range
       step={0.1}
@@ -17,33 +14,29 @@ export default function GpaSlider({
       values={values}
       onChange={setValues}
       renderTrack={({ props, children }) => (
-  <div
-    {...props}
-    className="gpa-slider__track"
-    style={{
-      ...props.style,
-      background: getTrackBackground({
-        values,
-        colors: [
-          "var(--secondary)", // left of first thumb
-          "var(--primary)",   // between thumbs
-          "var(--secondary)", // right of second thumb
-        ],
-        min: 0,
-        max: 4,
-      }),
-    }}
-  >
-    {children}
-  </div>
-)}
-      renderThumb={({ props }) => (
         <div
           {...props}
-          className="gpa-slider__thumb"
-        />
+          className="gpa-slider__track"
+          style={{
+            ...props.style,
+            background: getTrackBackground({
+              values,
+              colors: [
+                "var(--secondary)",
+                "var(--primary)",
+                "var(--secondary)",
+              ],
+              min: 0,
+              max: 4,
+            }),
+          }}
+        >
+          {children}
+        </div>
       )}
-      
+      renderThumb={({ props }) => (
+        <div {...props} className="gpa-slider__thumb" />
+      )}
     />
   );
 }
