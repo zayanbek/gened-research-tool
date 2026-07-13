@@ -1,9 +1,13 @@
+import { useSubjects } from "../../api/SubjectContext";
+
 type SubjectFilterProps = {
   value: string;
   onChange: (value: string) => void;
 };
 
 export default function SubjectFilter({ value, onChange }: SubjectFilterProps) {
+  const { subjects, loading } = useSubjects();
+
   return (
     <div className="search-card__section">
       <label htmlFor="subject">Subject</label>
@@ -12,12 +16,17 @@ export default function SubjectFilter({ value, onChange }: SubjectFilterProps) {
         id="subject"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        disabled={loading}
       >
-        <option value="">Any Subject</option>
-        <option value="CS">CS</option>
-        <option value="MATH">MATH</option>
-        <option value="ECON">ECON</option>
-        <option value="STAT">STAT</option>
+        <option value="">
+          {loading ? "Loading subjects..." : "Any Subject"}
+        </option>
+
+        {subjects.map((subject) => (
+          <option key={subject.code} value={subject.code}>
+            {subject.code} - {subject.name}
+          </option>
+        ))}
       </select>
     </div>
   );
