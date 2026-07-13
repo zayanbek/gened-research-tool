@@ -1,6 +1,6 @@
 type CourseNumberFilterProps = {
-  value: string;
-  onChange: (value: string) => void;
+  value: number | undefined;
+  onChange: (value: number | undefined) => void;
 };
 
 export default function CourseNumberFilter({
@@ -14,9 +14,11 @@ export default function CourseNumberFilter({
       <input
         id="courseNumber"
         type="number"
+        value={value ?? ""}
         placeholder="e.g. 225"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) =>
+          onChange(e.target.value === "" ? undefined : Number(e.target.value))
+        }
       />
     </div>
   );
