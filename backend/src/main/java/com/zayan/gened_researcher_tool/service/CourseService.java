@@ -1,7 +1,6 @@
 package com.zayan.gened_researcher_tool.service;
 
 import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
-import com.zayan.gened_researcher_tool.entity.CourseInformation;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.repository.DistinctCourseRepository;
 import org.springframework.stereotype.Service;
@@ -88,11 +87,8 @@ public class CourseService {
 
             spec = spec.and((root, query, cb) -> {
 
-                Join<CourseInformation, DistinctCourse> course =
-                        root.join("course");
-
                 Join<DistinctCourse, CourseGenEd> genEd =
-                        course.join("genEds");
+                        root.join("genEds");
 
                 query.distinct(true);
 
