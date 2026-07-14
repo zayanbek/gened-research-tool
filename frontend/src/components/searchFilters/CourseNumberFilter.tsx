@@ -1,6 +1,8 @@
+import "./SearchFilters.css";
+
 type CourseNumberFilterProps = {
-  value: number | undefined;
-  onChange: (value: number | undefined) => void;
+  value?: number;
+  onChange: (value?: number) => void;
 };
 
 export default function CourseNumberFilter({
@@ -8,17 +10,31 @@ export default function CourseNumberFilter({
   onChange,
 }: CourseNumberFilterProps) {
   return (
-    <div className="search-card__section">
+    <div className="filter-section">
       <label htmlFor="courseNumber">Course Number</label>
 
       <input
         id="courseNumber"
         type="number"
-        value={value ?? ""}
+        min={0}
+        max={999}
+        step={1}
         placeholder="e.g. 225"
-        onChange={(e) =>
-          onChange(e.target.value === "" ? undefined : Number(e.target.value))
-        }
+        value={value ?? ""}
+        onChange={(e) => {
+          const text = e.target.value;
+
+          if (text === "") {
+            onChange(undefined);
+            return;
+          }
+
+          const number = Number(text);
+
+          if (number >= 0 && number <= 999) {
+            onChange(number);
+          }
+        }}
       />
     </div>
   );
