@@ -5,4 +5,5 @@ export interface CourseSearchResult {
   title: string;
   averageGpa: number;
   genEdCodes: [];
+  wasOffered: boolean;
 }

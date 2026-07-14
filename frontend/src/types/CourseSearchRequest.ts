@@ -6,4 +6,5 @@ export interface CourseSearchRequest {
   maxGpa: number;
   title: string;
   genEdCodes: string[];
+  offered: boolean;
 }
