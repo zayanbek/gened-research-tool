@@ -12,7 +12,7 @@
   color: var(--secondary-foreground);
 }
 
-.filter-section input,
+.filter-section input:not([type="checkbox"]),
 .filter-section select {
   appearance: none;
   -webkit-appearance: none;
