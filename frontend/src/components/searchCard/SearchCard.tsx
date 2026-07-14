@@ -7,9 +7,12 @@ import GpaRangeFilter from "../searchFilters/GpaRangeFilter";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
+
 import LevelFilter from "../searchFilters/LevelFilter";
 import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
+import OfferedLastTermFilter from "../searchFilters/OfferedLastTermFilter";
 
 export default function SearchCard() {
   const navigate = useNavigate();
@@ -22,6 +25,7 @@ export default function SearchCard() {
     maxGpa: 4,
     title: "",
     genEdCodes: [],
+    offered: true,
   });
 
   return (
@@ -86,6 +90,16 @@ export default function SearchCard() {
           setFilters((prev) => ({
             ...prev,
             level,
+          }))
+        }
+      />
+
+      <OfferedLastTermFilter
+        value={filters.offered}
+        onChange={(offered) =>
+          setFilters((prev) => ({
+            ...prev,
+            offered,
           }))
         }
       />
