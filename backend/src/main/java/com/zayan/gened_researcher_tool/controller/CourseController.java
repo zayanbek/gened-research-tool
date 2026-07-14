@@ -28,8 +28,9 @@ public class CourseController {
             @RequestParam(required = false) Double minGpa,
             @RequestParam(required = false) Double maxGpa,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) List<String> genEdCodes
+            @RequestParam(required = false) List<String> genEdCodes,
+            @RequestParam(required = false) Boolean wasOffered
     ) {
-        return courseService.searchCourses(subject, number, level, minGpa, maxGpa, title, genEdCodes);
+        return courseService.searchCourses(subject, number, level, minGpa, maxGpa, title, genEdCodes, wasOffered);
     }
 }

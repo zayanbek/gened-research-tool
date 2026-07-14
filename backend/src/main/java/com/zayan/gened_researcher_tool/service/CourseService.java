@@ -26,7 +26,8 @@ public class CourseService {
             Double minGpa,
             Double maxGpa,
             String title,
-            List<String> genEdCodes)
+            List<String> genEdCodes,
+            Boolean wasOffered)
     {
 
         Specification<DistinctCourse> spec = Specification.unrestricted();
@@ -98,6 +99,14 @@ public class CourseService {
             });
         }
 
+        if (wasOffered != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(
+                            root.get("wasOffered"),
+                            wasOffered
+                    ));
+        }
+
         List<DistinctCourse> courses = distinctCourseRepository.findAll(spec);
 
         return courses.stream()
@@ -118,7 +127,8 @@ public class CourseService {
                 course.getNumber(),
                 course.getCourseTitle(),
                 course.getAverageGpa(),
-                genEdCodes
+                genEdCodes,
+                course.isWasOffered()
         );
     }
 

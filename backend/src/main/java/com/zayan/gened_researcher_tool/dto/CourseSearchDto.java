@@ -10,17 +10,19 @@ public class CourseSearchDto {
     private String title;
     private Double averageGpa;
     private List<String> genEdCodes;
+    private Boolean wasOffered;
 
     public CourseSearchDto() {
     }
 
-    public CourseSearchDto(Integer id, String subject, Integer number, String title, Double averageGpa, List<String> genEdCodes) {
+    public CourseSearchDto(Integer id, String subject, Integer number, String title, Double averageGpa, List<String> genEdCodes, Boolean wasOffered) {
         this.id = id;
         this.subject = subject;
         this.number = number;
         this.title = title;
         this.averageGpa = averageGpa;
         this.genEdCodes = genEdCodes;
+        this.wasOffered = wasOffered;
     }
 
     public Integer getId() {
@@ -69,5 +71,13 @@ public class CourseSearchDto {
 
     public void setGenEdCodes(List<String> genEdCodes) {
         this.genEdCodes = genEdCodes;
+    }
+
+    public Boolean getWasOffered() {
+        return wasOffered;
+    }
+
+    public void setWasOffered(Boolean wasOffered) {
+        this.wasOffered = wasOffered;
     }
 }

@@ -30,6 +30,26 @@ public class DistinctCourse {
     @Column(name="average_gpa")
     private double averageGpa;
 
+    // New Columns
+
+    @Column(name="was_offered_spring_2026")
+    private boolean wasOffered;
+
+    @Column(name="description")
+    private String description;
+
+    @Column(name="credit_hours")
+    private String creditHours;
+
+    @Column(name="section_info")
+    private String sectionInfo;
+
+    @Column(name="section_title")
+    private String sectionTitle;
+
+    @Column(name="section_credit_hours")
+    private String sectionCreditHours;
+
     public DistinctCourse() {
     }
 
@@ -87,5 +107,53 @@ public class DistinctCourse {
 
     public void setAverageGpa(double averageGpa) {
         this.averageGpa = averageGpa;
+    }
+
+    public boolean isWasOffered() {
+        return wasOffered;
+    }
+
+    public void setWasOffered(boolean wasOffered) {
+        this.wasOffered = wasOffered;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCreditHours() {
+        return creditHours;
+    }
+
+    public void setCreditHours(String creditHours) {
+        this.creditHours = creditHours;
+    }
+
+    public String getSectionInfo() {
+        return sectionInfo;
+    }
+
+    public void setSectionInfo(String sectionInfo) {
+        this.sectionInfo = sectionInfo;
+    }
+
+    public String getSectionTitle() {
+        return sectionTitle;
+    }
+
+    public void setSectionTitle(String sectionTitle) {
+        this.sectionTitle = sectionTitle;
+    }
+
+    public String getSectionCreditHours() {
+        return sectionCreditHours;
+    }
+
+    public void setSectionCreditHours(String sectionCreditHours) {
+        this.sectionCreditHours = sectionCreditHours;
     }
 }
