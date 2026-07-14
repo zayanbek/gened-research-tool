@@ -4,12 +4,12 @@ import SubjectFilter from "../searchFilters/SubjectFilter";
 import CourseNumberFilter from "../searchFilters/CourseNumberFilter";
 import CourseNameFilter from "../searchFilters/CourseNameFilter";
 import GpaRangeFilter from "../searchFilters/GpaRangeFilter";
-import OfferedThisTermFilter from "../searchFilters/OfferedThisTermFilter";
-import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
+import LevelFilter from "../searchFilters/LevelFilter";
+import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
 
 export default function SearchCard() {
   const navigate = useNavigate();
@@ -40,20 +40,20 @@ export default function SearchCard() {
 
       <CourseNumberFilter
         value={filters.number}
-        onChange={(courseNumber) =>
+        onChange={(number) =>
           setFilters((prev) => ({
             ...prev,
-            courseNumber,
+            number,
           }))
         }
       />
 
       <CourseNameFilter
-        value={filters.title}
-        onChange={(courseName) =>
+        value={filters.title ?? ""}
+        onChange={(title) =>
           setFilters((prev) => ({
             ...prev,
-            courseName,
+            title,
           }))
         }
       />
@@ -66,6 +66,26 @@ export default function SearchCard() {
             ...prev,
             minGpa,
             maxGpa,
+          }))
+        }
+      />
+
+      <GenedCategoryFilter
+        value={filters.genEdCodes}
+        onChange={(genEdCodes) =>
+          setFilters((prev) => ({
+            ...prev,
+            genEdCodes,
+          }))
+        }
+      />
+
+      <LevelFilter
+        value={filters.level}
+        onChange={(level) =>
+          setFilters((prev) => ({
+            ...prev,
+            level,
           }))
         }
       />
