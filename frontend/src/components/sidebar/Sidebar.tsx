@@ -8,6 +8,7 @@ import LevelFilter from "../searchFilters/LevelFilter";
 
 import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
 import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
+import OfferedLastTermFilter from "../searchFilters/OfferedLastTermFilter";
 
 type SidebarProps = {
   filters: CourseSearchRequest;
@@ -74,6 +75,16 @@ export default function Sidebar({
           setFilters((prev) => ({
             ...prev,
             genEdCodes,
+          }))
+        }
+      />
+
+      <OfferedLastTermFilter
+        value={filters.offered}
+        onChange={(offered) =>
+          setFilters((prev) => ({
+            ...prev,
+            offered,
           }))
         }
       />
