@@ -1,5 +1,7 @@
 import { useSubjects } from "../../api/SubjectContext";
 
+import "./SearchFilters.css";
+
 type SubjectFilterProps = {
   value: string;
   onChange: (value: string) => void;
@@ -9,7 +11,7 @@ export default function SubjectFilter({ value, onChange }: SubjectFilterProps) {
   const { subjects, loading } = useSubjects();
 
   return (
-    <div className="search-card__section">
+    <div className="filter-section">
       <label htmlFor="subject">Subject</label>
 
       <select

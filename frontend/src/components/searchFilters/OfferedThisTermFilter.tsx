@@ -1,3 +1,5 @@
+import "./SearchFilters.css";
+
 export default function OfferedThisTermFilter() {
   return (
     <div className="search-card__section search-card__toggle">

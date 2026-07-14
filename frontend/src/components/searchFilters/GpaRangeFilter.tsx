@@ -1,3 +1,5 @@
+import "./SearchFilters.css";
+
 import GpaSlider from "./GpaSlider";
 
 type GpaRangeFilterProps = {
@@ -12,10 +14,10 @@ export default function GpaRangeFilter({
   onChange,
 }: GpaRangeFilterProps) {
   return (
-    <div className="search-card__section">
+    <div className="filter-section">
       <label>GPA Range</label>
 
-      <div className="search-card__gpa-values">
+      <div className="filter-gpa-values">
         <span>{minGpa.toFixed(1)}</span>
         <span>{maxGpa.toFixed(1)}</span>
       </div>

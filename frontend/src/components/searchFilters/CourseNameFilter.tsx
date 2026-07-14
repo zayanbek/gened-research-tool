@@ -1,3 +1,5 @@
+import "./SearchFilters.css";
+
 type CourseNameFilterProps = {
   value: string;
   onChange: (value: string) => void;
@@ -8,7 +10,7 @@ export default function CourseNameFilter({
   onChange,
 }: CourseNameFilterProps) {
   return (
-    <div className="search-card__section">
+    <div className="filter-section">
       <label htmlFor="courseName">Course Name</label>
 
       <input
