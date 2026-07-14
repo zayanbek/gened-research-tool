@@ -3,7 +3,7 @@
 
 import pandas as pd
 
-file_name = "data/uiuc-gened-course-information.csv"
+file_name = "data/uiuc-course-catalog.csv"
 
 df = pd.read_csv(file_name)
 
@@ -26,7 +26,25 @@ CREATE TABLE load_courses_gen_ed_csv (
     HUM VARCHAR(5),
     NAT VARCHAR(5),
     QR VARCHAR(5),
-    SBS VARCHAR(5),
+    SBS VARCHAR(5)
 );  
   
+"""
+
+"""
+
+CREATE TABLE course_catalog (
+	Year INTEGER,
+	Term VARCHAR(10),
+	Subject VARCHAR(10),
+	Number INTEGER,
+	Name TINYTEXT,
+	
+    Description TEXT(3000),
+	Credit Hours VARCHAR(50),
+	Section Info TEXT(1000),
+    Section Title TEXT(50),
+    Section Credit Hours INTEGER,
+);
+
 """
