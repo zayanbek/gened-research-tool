@@ -4,9 +4,10 @@ import SubjectFilter from "../searchFilters/SubjectFilter";
 import CourseNumberFilter from "../searchFilters/CourseNumberFilter";
 import CourseNameFilter from "../searchFilters/CourseNameFilter";
 import GpaRangeFilter from "../searchFilters/GpaRangeFilter";
-import OfferedThisTermFilter from "../searchFilters/OfferedThisTermFilter";
+import LevelFilter from "../searchFilters/LevelFilter";
 
 import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
+import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
 
 type SidebarProps = {
   filters: CourseSearchRequest;
@@ -63,6 +64,26 @@ export default function Sidebar({
             ...prev,
             minGpa,
             maxGpa,
+          }))
+        }
+      />
+
+      <GenedCategoryFilter
+        value={filters.genEdCodes}
+        onChange={(genEdCodes) =>
+          setFilters((prev) => ({
+            ...prev,
+            genEdCodes,
+          }))
+        }
+      />
+
+      <LevelFilter
+        value={filters.level}
+        onChange={(level) =>
+          setFilters((prev) => ({
+            ...prev,
+            level,
           }))
         }
       />
