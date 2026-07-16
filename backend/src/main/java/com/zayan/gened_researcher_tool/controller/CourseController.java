@@ -1,12 +1,10 @@
 package com.zayan.gened_researcher_tool.controller;
 
+import com.zayan.gened_researcher_tool.dto.CourseDescriptionDto;
 import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
 import com.zayan.gened_researcher_tool.service.CourseService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +30,12 @@ public class CourseController {
             @RequestParam(required = false) Boolean wasOffered
     ) {
         return courseService.searchCourses(subject, number, level, minGpa, maxGpa, title, genEdCodes, wasOffered);
+    }
+
+    @GetMapping("/{id}")
+    public CourseDescriptionDto getCourseDescription(
+            @PathVariable Integer id
+    ) {
+        return courseService.getCourse(id);
     }
 }
