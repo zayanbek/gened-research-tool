@@ -9,13 +9,12 @@ public class CourseDescriptionDto {
     private String sectionInfo;
     private String sectionTitle;
     private String sectionCreditHours;
-    private List<Double> gpaHistory;
-
+    private List<GpaHistoryDto> gpaHistory;
 
     public CourseDescriptionDto() {
     }
 
-    public CourseDescriptionDto(String description, String creditHours, String sectionInfo, String sectionTitle, String sectionCreditHours, List<Double> gpaHistory) {
+    public CourseDescriptionDto(String description, String creditHours, String sectionInfo, String sectionTitle, String sectionCreditHours, List<GpaHistoryDto> gpaHistory) {
         this.description = description;
         this.creditHours = creditHours;
         this.sectionInfo = sectionInfo;
@@ -64,11 +63,11 @@ public class CourseDescriptionDto {
         this.sectionCreditHours = sectionCreditHours;
     }
 
-    public List<Double> getGpaHistory() {
+    public List<GpaHistoryDto> getGpaHistory() {
         return gpaHistory;
     }
 
-    public void setGpaHistory(List<Double> gpaHistory) {
+    public void setGpaHistory(List<GpaHistoryDto> gpaHistory) {
         this.gpaHistory = gpaHistory;
     }
 }
