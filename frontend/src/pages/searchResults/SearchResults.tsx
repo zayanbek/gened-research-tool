@@ -3,14 +3,14 @@ import "./SearchResults.css";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ResultsCard from "../../components/resultsCard/ResultsCard";
-
+import DescriptionPanel from "../../components/descriptionPanel/DescriptionPanel";
 import { searchCourses } from "../../api/courses";
 
 import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
+import type { CourseSearchResult } from "../../types/CourseSearchResult";
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import type { CourseSearchResult } from "../../types/CourseSearchResult";
 
 export default function SearchResults() {
   const location = useLocation();
@@ -26,6 +26,7 @@ export default function SearchResults() {
     maxGpa: 4,
     title: "",
     genEdCodes: [],
+    offered: true,
   };
 
   // Sidebar edits this state
@@ -33,6 +34,8 @@ export default function SearchResults() {
 
   const [results, setResults] = useState<CourseSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
 
   async function loadResults() {
     setLoading(true);
@@ -56,6 +59,7 @@ export default function SearchResults() {
       maxGpa: 4,
       title: "",
       genEdCodes: [],
+      offered: true,
     });
   }
 
@@ -83,10 +87,27 @@ export default function SearchResults() {
             <p>No courses found.</p>
           ) : (
             results.map((course) => (
-              <ResultsCard key={course.id} course={course} />
+              <ResultsCard
+                key={course.id}
+                course={course}
+                onClick={() => {
+                  if (selectedCourseId === course.id) {
+                    // Clicking the same card closes the panel
+                    setSelectedCourseId(null);
+                  } else {
+                    // Clicking another card opens/updates the panel
+                    setSelectedCourseId(course.id);
+                  }
+                }}
+              />
             ))
           )}
         </section>
+
+        <DescriptionPanel
+          courseId={selectedCourseId}
+          onClose={() => setSelectedCourseId(null)}
+        />
       </main>
     </div>
   );
