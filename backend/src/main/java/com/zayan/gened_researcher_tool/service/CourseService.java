@@ -1,6 +1,8 @@
 package com.zayan.gened_researcher_tool.service;
 
+import com.zayan.gened_researcher_tool.dto.CourseDescriptionDto;
 import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
+import com.zayan.gened_researcher_tool.dto.GpaHistoryDto;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.repository.DistinctCourseRepository;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.zayan.gened_researcher_tool.entity.CourseGenEd;
 import jakarta.persistence.criteria.Join;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -110,11 +113,47 @@ public class CourseService {
         List<DistinctCourse> courses = distinctCourseRepository.findAll(spec);
 
         return courses.stream()
-                .map(this::toDto)
+                .map(this::toCourseSearchDto)
                 .toList();
     }
 
-    private CourseSearchDto toDto(DistinctCourse course) {
+    public CourseDescriptionDto getCourse(int id) {
+
+        DistinctCourse course = distinctCourseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        List<GpaHistoryDto> gpaHistory = course.getStatistics()
+                .stream()
+                .map(stat -> new GpaHistoryDto(
+                        stat.getYear(),
+                        stat.getTerm(),
+                        stat.getGpa()
+                ))
+                .toList();
+
+        gpaHistory.sort(
+                Comparator
+                        .comparing(GpaHistoryDto::getYear)
+                        .thenComparing(dto -> switch (dto.getTerm()) {
+                            case "Spring" -> 0;
+                            case "Summer" -> 1;
+                            case "Fall" -> 2;
+                            default -> 3;
+                        })
+        );
+
+        return new CourseDescriptionDto(
+                course.getDescription(),
+                course.getCreditHours(),
+                course.getSectionInfo(),
+                course.getSectionTitle(),
+                course.getSectionCreditHours(),
+                gpaHistory
+        );
+    }
+
+
+    private CourseSearchDto toCourseSearchDto(DistinctCourse course) {
 
         List<String> genEdCodes = course.getGenEds()
                 .stream()
