@@ -4,11 +4,12 @@ import type { CourseSearchResult } from "../../types/CourseSearchResult";
 
 type ResultsCardProps = {
   course: CourseSearchResult;
+  onClick: () => void;
 };
 
-export default function ResultsCard({ course }: ResultsCardProps) {
+export default function ResultsCard({ course, onClick }: ResultsCardProps) {
   return (
-    <aside className="results-card">
+    <aside className="results-card" onClick={onClick}>
       <label className="results-card__subject-code">
         {course.subject} {course.number}
       </label>
