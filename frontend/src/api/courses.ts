@@ -34,3 +34,13 @@ export async function searchCourses(filters: CourseSearchRequest) {
 
   return response.json();
 }
+
+export async function getCourseDescription(id: number | null) {
+  const response = await fetch(`http://localhost:8080/courses/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Search failed");
+  }
+
+  return response.json();
+}
