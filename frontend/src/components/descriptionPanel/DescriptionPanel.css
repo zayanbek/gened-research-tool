@@ -1,0 +1,34 @@
+.course-description-panel {
+  width: 460px;
+  flex-shrink: 0;
+
+  padding: 24px;
+
+  background: var(--card);
+  color: var(--card-foreground);
+
+  border-right: 1px solid var(--border);
+
+  overflow-y: auto;
+}
+
+.course-description-panel-title {
+  margin: 0 0 24px;
+
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.description-section label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--secondary-foreground);
+}
+
+.description-section {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+  margin-bottom: 20px;
+}
