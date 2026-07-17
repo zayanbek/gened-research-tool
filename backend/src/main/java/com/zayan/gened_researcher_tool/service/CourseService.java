@@ -3,6 +3,7 @@ package com.zayan.gened_researcher_tool.service;
 import com.zayan.gened_researcher_tool.dto.CourseDescriptionDto;
 import com.zayan.gened_researcher_tool.dto.CourseSearchDto;
 import com.zayan.gened_researcher_tool.dto.GpaHistoryDto;
+import com.zayan.gened_researcher_tool.entity.CourseInformation;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.repository.DistinctCourseRepository;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import jakarta.persistence.criteria.Join;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -124,23 +126,36 @@ public class CourseService {
 
         List<GpaHistoryDto> gpaHistory = course.getStatistics()
                 .stream()
-                .map(stat -> new GpaHistoryDto(
-                        stat.getYear(),
-                        stat.getTerm(),
-                        stat.getGpa()
+                .collect(   Collectors.groupingBy(
+                        stat -> stat.getYear() + "|" + stat.getTerm()
                 ))
-                .toList();
+                .values()
+                .stream()
+                .map(group -> {
+                    CourseInformation first = group.getFirst();
 
-        gpaHistory.sort(
-                Comparator
-                        .comparing(GpaHistoryDto::getYear)
-                        .thenComparing(dto -> switch (dto.getTerm()) {
-                            case "Spring" -> 0;
-                            case "Summer" -> 1;
-                            case "Fall" -> 2;
-                            default -> 3;
-                        })
-        );
+                    double averageGpa = group.stream()
+                            .mapToDouble(CourseInformation::getGpa)
+                            .average()
+                            .orElse(0.0);
+
+                    return new GpaHistoryDto(
+                            first.getYear(),
+                            first.getTerm(),
+                            averageGpa
+                    );
+                })
+                .sorted(
+                        Comparator
+                                .comparing(GpaHistoryDto::getYear)
+                                .thenComparing(dto -> switch (dto.getTerm()) {
+                                    case "Spring" -> 0;
+                                    case "Summer" -> 1;
+                                    case "Fall" -> 2;
+                                    default -> 3;
+                                })
+                )
+                .toList();
 
         return new CourseDescriptionDto(
                 course.getDescription(),
@@ -151,7 +166,6 @@ public class CourseService {
                 gpaHistory
         );
     }
-
 
     private CourseSearchDto toCourseSearchDto(DistinctCourse course) {
 
