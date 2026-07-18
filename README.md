@@ -88,8 +88,6 @@ npm install
 npm run dev
 ```
 
-(or `npm start` depending on your setup)
-
 The frontend will be available at:
 
 ```
@@ -103,6 +101,7 @@ The frontend communicates with the backend using REST endpoints for retrieving:
 - Subjects
 - Courses
 - Filtered search results
+- Subject descriptions, credit hours, and gpa history
 
 Course searches support combinations of filters, including:
 
@@ -110,8 +109,14 @@ Course searches support combinations of filters, including:
 - Course Number
 - Course Title
 - Course Level
-- minimum and maximum average gpa
+- Minimum and maximum average gpa
 - GenEd Categories
+- Id number
+
+Subject searches support:
+
+- subject name
+- subject abbreviation (ex. Modern Greek = GRKM)
 
 ## Future Improvements
 
