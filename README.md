@@ -9,7 +9,7 @@ A web application that helps students search, filter, and explore University of 
   - Course number
   - Subject
 - Filter courses by General Education categories
-<!-- - View detailed course information -->
+- View detailed course information
 - Fast search using backend filtering and database queries
 - Responsive React frontend
 
@@ -32,6 +32,12 @@ A web application that helps students search, filter, and explore University of 
 - PostgreSQL
 
 <!-- Make a diagram of the project architecture -->
+
+### Development Tools
+
+- Postman
+- Maven
+- Git
 
 ## Running the Project
 
@@ -96,6 +102,8 @@ http://localhost:5173
 
 ## API
 
+API endpoints were developed and tested using Postman before frontend integration.
+
 The frontend communicates with the backend using REST endpoints for retrieving:
 
 - Subjects
@@ -117,6 +125,19 @@ Subject searches support:
 
 - subject name
 - subject abbreviation (ex. Modern Greek = GRKM)
+
+## Database
+
+This project uses a PostgreSQL database to store course information and related metadata.
+
+The repository includes:
+
+- **`database/schema.sql`** – SQL script for creating the database schema.
+- **`database/erd.png`** – Entity Relationship Diagram (ERD) showing the database structure and table relationships.
+
+### Entity Relationship Diagram
+
+![Entity Relationship Diagram](database/erd.png)
 
 ## Future Improvements
 
