@@ -105,9 +105,27 @@
 }
 
 .filter-toggle {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.filter-toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.filter-toggle__input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
 }
 
 .gpa-slider__track {
