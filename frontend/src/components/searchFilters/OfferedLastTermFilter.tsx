@@ -11,14 +11,14 @@ export default function OfferedLastTermFilter({
 }: OfferedLastTermFilterProps) {
   return (
     <div className="filter-section filter-toggle">
-      <label htmlFor="semester">Offered in Spring 2026?</label>
-
       <input
+        className="filter-toggle__input"
         id="semester"
         type="checkbox"
         checked={value}
         onChange={(e) => onChange(e.target.checked)}
       />
+      <label htmlFor="semester">Offered in Spring 2026?</label>
     </div>
   );
 }
