@@ -3,7 +3,7 @@ import type { CourseSearchRequest } from "../types/CourseSearchRequest";
 export async function searchCourses(filters: CourseSearchRequest) {
   const params = new URLSearchParams();
 
-  if (filters.subject) params.append("subject", filters.subject);
+  if (filters.subject) params.append("subject", filters.subject.toString());
 
   if (filters.number !== undefined)
     params.append("number", filters.number.toString());
@@ -17,10 +17,16 @@ export async function searchCourses(filters: CourseSearchRequest) {
   if (filters.maxGpa !== undefined)
     params.append("maxGpa", filters.maxGpa.toString());
 
-  if (filters.title) params.append("title", filters.title);
+  if (filters.title) params.append("title", filters.title.toString());
 
   if (filters.offered !== undefined)
     params.append("offered", filters.offered.toString());
+
+  if (filters.sortBy !== undefined)
+    params.append("sortBy", filters.sortBy.toString());
+
+  if (filters.sortDirection !== undefined)
+    params.append("sortDirection", filters.sortDirection.toString());
 
   filters.genEdCodes?.forEach((code) => params.append("genEdCodes", code));
 
