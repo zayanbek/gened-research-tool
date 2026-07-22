@@ -13,6 +13,7 @@ import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
 import LevelFilter from "../searchFilters/LevelFilter";
 import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
 import OfferedLastTermFilter from "../searchFilters/OfferedLastTermFilter";
+import SortByFilter from "../searchFilters/SortByFilter";
 
 export default function SearchCard() {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ export default function SearchCard() {
     title: "",
     genEdCodes: [],
     offered: true,
+    sortBy: "title",
+    sortDirection: "asc",
   });
 
   return (
@@ -100,6 +103,23 @@ export default function SearchCard() {
           setFilters((prev) => ({
             ...prev,
             offered,
+          }))
+        }
+      />
+
+      <SortByFilter
+        sortBy={filters.sortBy}
+        sortDirection={filters.sortDirection}
+        onSortByChange={(sortBy) =>
+          setFilters((prev) => ({
+            ...prev,
+            sortBy,
+          }))
+        }
+        onDirectionChange={(sortDirection) =>
+          setFilters((prev) => ({
+            ...prev,
+            sortDirection,
           }))
         }
       />
