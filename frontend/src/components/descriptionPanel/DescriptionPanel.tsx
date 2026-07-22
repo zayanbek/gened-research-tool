@@ -9,12 +9,12 @@ import GpaHistoryChart from "./gpaHistoryChart/GpaHistoryChart";
 
 type CourseDescriptionPanelProps = {
   courseId: number | null;
-  onClose: () => void;
+  // onClose: () => void;
 };
 
 export default function DescriptionPanel({
   courseId,
-  onClose,
+  // onClose,
 }: CourseDescriptionPanelProps) {
   const [course, setCourse] = useState<CourseDescriptionSearchResult | null>(
     null,
