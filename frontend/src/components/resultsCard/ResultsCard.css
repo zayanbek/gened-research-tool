@@ -49,12 +49,38 @@
 
   padding: 4px 12px;
 
+  /* 
   color: var(--accent);
   background: var(--accent-muted);
+  border: 1px solid var(--accent); 
+  */
 
-  border: 1px solid var(--accent);
   border-radius: 6px;
 
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+.tag--acp {
+  background: #7c3aed;
+}
+
+.tag--hum {
+  background: #b1770b;
+}
+
+.tag--sbs {
+  background: #c9720f;
+}
+
+.tag--nat {
+  background: #06ae1c;
+}
+
+.tag--cs {
+  background: #d55008;
+}
+
+.tag--qr {
+  background: #2563eb;
 }
