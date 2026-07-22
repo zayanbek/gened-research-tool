@@ -27,6 +27,8 @@ export default function SearchResults() {
     title: "",
     genEdCodes: [],
     offered: true,
+    sortBy: "title",
+    sortDirection: "asc",
   };
 
   // Sidebar edits this state
@@ -60,6 +62,8 @@ export default function SearchResults() {
       title: "",
       genEdCodes: [],
       offered: true,
+      sortBy: "title",
+      sortDirection: "asc",
     });
   }
 
@@ -106,7 +110,7 @@ export default function SearchResults() {
 
         <DescriptionPanel
           courseId={selectedCourseId}
-          onClose={() => setSelectedCourseId(null)}
+          // onClose={() => setSelectedCourseId(null)}
         />
       </main>
     </div>

@@ -9,6 +9,7 @@ import LevelFilter from "../searchFilters/LevelFilter";
 import type { CourseSearchRequest } from "../../types/CourseSearchRequest";
 import GenedCategoryFilter from "../searchFilters/GenedCategoryFilter";
 import OfferedLastTermFilter from "../searchFilters/OfferedLastTermFilter";
+import SortByFilter from "../searchFilters/SortByFilter";
 
 type SidebarProps = {
   filters: CourseSearchRequest;
@@ -79,6 +80,16 @@ export default function Sidebar({
         }
       />
 
+      <LevelFilter
+        value={filters.level}
+        onChange={(level) =>
+          setFilters((prev) => ({
+            ...prev,
+            level,
+          }))
+        }
+      />
+
       <OfferedLastTermFilter
         value={filters.offered}
         onChange={(offered) =>
@@ -89,12 +100,19 @@ export default function Sidebar({
         }
       />
 
-      <LevelFilter
-        value={filters.level}
-        onChange={(level) =>
+      <SortByFilter
+        sortBy={filters.sortBy}
+        sortDirection={filters.sortDirection}
+        onSortByChange={(sortBy) =>
           setFilters((prev) => ({
             ...prev,
-            level,
+            sortBy,
+          }))
+        }
+        onDirectionChange={(sortDirection) =>
+          setFilters((prev) => ({
+            ...prev,
+            sortDirection,
           }))
         }
       />

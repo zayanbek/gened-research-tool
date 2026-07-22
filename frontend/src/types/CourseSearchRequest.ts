@@ -7,4 +7,6 @@ export interface CourseSearchRequest {
   title: string;
   genEdCodes: string[];
   offered: boolean;
+  sortBy: "subject" | "number" | "title" | "gpa" | "level";
+  sortDirection: "asc" | "desc";
 }
