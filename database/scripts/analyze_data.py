@@ -3,7 +3,7 @@
 
 import pandas as pd
 
-file_name = "data/uiuc-course-catalog.csv"
+file_name = "../data/uiuc-tre-dataset.csv"
 
 df = pd.read_csv(file_name)
 
@@ -13,6 +13,21 @@ for column in df.columns:
     print(f"\"{column}\"\t\t{max_length}")
     
 print()
+
+"""
+CREATE TABLE load_tre_csv (
+    "term" VARCHAR(10),
+    "unit" VARCHAR(100),
+    "lname" VARCHAR(50),
+    "fname" VARCHAR(10),
+    "role" VARCHAR(50),
+    "ranking" VARCHAR(50),
+    "course" VARCHAR(10)
+);  
+
+"""
+
+
 
 """
 CREATE TABLE load_courses_gen_ed_csv (
