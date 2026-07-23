@@ -1,6 +1,7 @@
 package com.zayan.gened_researcher_tool.controller;
 
-import com.zayan.gened_researcher_tool.dto.CourseDescriptionDto;
+import com.zayan.gened_researcher_tool.dto.CourseDescriptionResultDto;
+import com.zayan.gened_researcher_tool.dto.CourseDescriptionResultDto;
 import com.zayan.gened_researcher_tool.dto.CourseSearchRequestDto;
 import com.zayan.gened_researcher_tool.dto.CourseSearchResultDto;
 import com.zayan.gened_researcher_tool.service.CourseService;
@@ -48,7 +49,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public CourseDescriptionDto getCourseDescription(
+    public CourseDescriptionResultDto getCourseDescription(
             @PathVariable Integer id
     ) {
         return courseService.getCourse(id);

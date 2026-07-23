@@ -2,7 +2,7 @@ package com.zayan.gened_researcher_tool.dto;
 
 import java.util.List;
 
-public class CourseDescriptionDto {
+public class CourseDescriptionResultDto {
 
     private String description;
     private String creditHours;
@@ -10,17 +10,19 @@ public class CourseDescriptionDto {
     private String sectionTitle;
     private String sectionCreditHours;
     private List<GpaHistoryDto> gpaHistory;
+    private List<TeacherInformationDto> teacherInformation;
 
-    public CourseDescriptionDto() {
+    public CourseDescriptionResultDto() {
     }
 
-    public CourseDescriptionDto(String description, String creditHours, String sectionInfo, String sectionTitle, String sectionCreditHours, List<GpaHistoryDto> gpaHistory) {
+    public CourseDescriptionResultDto(String description, String creditHours, String sectionInfo, String sectionTitle, String sectionCreditHours, List<GpaHistoryDto> gpaHistory, List<TeacherInformationDto> teacherInformation) {
         this.description = description;
         this.creditHours = creditHours;
         this.sectionInfo = sectionInfo;
         this.sectionTitle = sectionTitle;
         this.sectionCreditHours = sectionCreditHours;
         this.gpaHistory = gpaHistory;
+        this.teacherInformation = teacherInformation;
     }
 
     public String getDescription() {
@@ -69,5 +71,13 @@ public class CourseDescriptionDto {
 
     public void setGpaHistory(List<GpaHistoryDto> gpaHistory) {
         this.gpaHistory = gpaHistory;
+    }
+
+    public List<TeacherInformationDto> getTeacherInformation() {
+        return teacherInformation;
+    }
+
+    public void setTeacherInformation(List<TeacherInformationDto> teacherInformation) {
+        this.teacherInformation = teacherInformation;
     }
 }

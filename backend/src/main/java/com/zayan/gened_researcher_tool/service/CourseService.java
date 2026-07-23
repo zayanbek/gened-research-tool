@@ -1,9 +1,6 @@
 package com.zayan.gened_researcher_tool.service;
 
-import com.zayan.gened_researcher_tool.dto.CourseDescriptionDto;
-import com.zayan.gened_researcher_tool.dto.CourseSearchRequestDto;
-import com.zayan.gened_researcher_tool.dto.CourseSearchResultDto;
-import com.zayan.gened_researcher_tool.dto.GpaHistoryDto;
+import com.zayan.gened_researcher_tool.dto.*;
 
 import com.zayan.gened_researcher_tool.entity.CourseInformation;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
@@ -44,13 +41,27 @@ public class CourseService {
                 .toList();
     }
 
-    public CourseDescriptionDto getCourse(int id)
+    public CourseDescriptionResultDto getCourse(int id)
     {
 
         DistinctCourse course = distinctCourseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        List<GpaHistoryDto> gpaHistory = course.getStatistics()
+        List<GpaHistoryDto> gpaHistory = getSortedGpaHistory(course);
+
+        return new CourseDescriptionResultDto(
+                course.getDescription(),
+                course.getCreditHours(),
+                course.getSectionInfo(),
+                course.getSectionTitle(),
+                course.getSectionCreditHours(),
+                gpaHistory,
+
+        );
+    }
+
+    private List<GpaHistoryDto> getSortedGpaHistory(DistinctCourse course) {
+        return course.getStatistics()
                 .stream()
                 .collect(   Collectors.groupingBy(
                         stat -> stat.getYear() + "|" + stat.getTerm()
@@ -82,15 +93,6 @@ public class CourseService {
                                 })
                 )
                 .toList();
-
-        return new CourseDescriptionDto(
-                course.getDescription(),
-                course.getCreditHours(),
-                course.getSectionInfo(),
-                course.getSectionTitle(),
-                course.getSectionCreditHours(),
-                gpaHistory
-        );
     }
 
     private CourseSearchResultDto toCourseSearchDto(DistinctCourse course) {
@@ -198,7 +200,7 @@ public class CourseService {
         String field = switch (sortBy == null ? "" : sortBy.toLowerCase()) {
             case "subject" -> "subject";
             case "number" -> "number";
-            case "title" -> "courseTitle";
+//            case "title" -> "courseTitle";
             case "gpa" -> "averageGpa";
             case "offered" -> "wasOffered";
             case "level" -> "level";
