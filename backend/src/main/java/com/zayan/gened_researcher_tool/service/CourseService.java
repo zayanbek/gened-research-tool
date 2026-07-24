@@ -6,6 +6,7 @@ import com.zayan.gened_researcher_tool.entity.CourseInformation;
 import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.entity.CourseGenEd;
 
+import com.zayan.gened_researcher_tool.entity.Instructor;
 import com.zayan.gened_researcher_tool.repository.DistinctCourseRepository;
 
 import org.springframework.data.domain.Sort;
@@ -16,6 +17,7 @@ import jakarta.persistence.criteria.Join;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,8 +29,7 @@ public class CourseService {
         this.distinctCourseRepository = distinctCourseRepository;
     }
 
-    public List<CourseSearchResultDto> searchCourses(CourseSearchRequestDto request)
-    {
+    public List<CourseSearchResultDto> searchCourses(CourseSearchRequestDto request) {
 
         Specification<DistinctCourse> spec = buildSpecification(request);
 
@@ -48,7 +49,7 @@ public class CourseService {
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
         List<GpaHistoryDto> gpaHistory = getSortedGpaHistory(course);
-
+        List<TeacherInformationDto> teacherInformation = getSortedTeacherInformation(course);
         return new CourseDescriptionResultDto(
                 course.getDescription(),
                 course.getCreditHours(),
@@ -56,6 +57,7 @@ public class CourseService {
                 course.getSectionTitle(),
                 course.getSectionCreditHours(),
                 gpaHistory,
+                teacherInformation
 
         );
     }
@@ -91,6 +93,31 @@ public class CourseService {
                                     case "Fall" -> 2;
                                     default -> 3;
                                 })
+                )
+                .toList();
+    }
+
+    private List<TeacherInformationDto> getSortedTeacherInformation(DistinctCourse course) {
+        return course.getStatistics().stream()
+                .map(CourseInformation::getInstructor)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(
+                        Instructor::getId,
+                        i -> new TeacherInformationDto(
+                                i.getName(),
+                                i.getTimesExcellent(),
+                                i.getTimesOutstanding()
+                        ),
+                        (a, b) -> a
+                ))
+                .values()
+                .stream()
+                .sorted(
+                        Comparator.comparingInt(
+                                        (TeacherInformationDto t) -> t.getExcellent() + t.getOutstanding()
+                                )
+                                .reversed()
+                                .thenComparing(TeacherInformationDto::getName)
                 )
                 .toList();
     }
