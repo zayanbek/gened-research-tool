@@ -1,3 +1,4 @@
+from collections import defaultdict
 import os
 import psycopg
 from dotenv import load_dotenv
@@ -6,7 +7,7 @@ load_dotenv()
 
 # establish database connection
  
-db_connection = psycopg.connect(
+conn = psycopg.connect(
         host="localhost",
         port=5432,
         dbname="uiuc-gened-gpa-database",
@@ -14,7 +15,7 @@ db_connection = psycopg.connect(
         password=os.getenv("DB_PASSWORD")
     )
 
-cur = db_connection.cursor()
+cur = conn.cursor()
 
 ############################################################
 # Reset counts
@@ -129,6 +130,10 @@ def parse_term(term):
 
 for term, subject, lname, fname, ranking in cur.fetchall():
 
+    if not lname or not fname:
+        unresolved.append((lname, fname, subject, term, ranking))
+        continue
+
     lname = lname.strip().upper()
     fname = fname.strip().upper()
 
@@ -227,4 +232,4 @@ for row in unresolved:
 
 # close database connection
 cur.close()
-db_connection.close()
+conn.close()
