@@ -24,9 +24,11 @@ import java.util.stream.Collectors;
 public class CourseService {
     
     private final DistinctCourseRepository distinctCourseRepository;
+    private final RateMyProfessorService rateMyProfessorService;
 
-    public CourseService(DistinctCourseRepository distinctCourseRepository) {
+    public CourseService(DistinctCourseRepository distinctCourseRepository, RateMyProfessorService rateMyProfessorService) {
         this.distinctCourseRepository = distinctCourseRepository;
+        this.rateMyProfessorService = rateMyProfessorService;
     }
 
     public List<CourseSearchResultDto> searchCourses(CourseSearchRequestDto request) {
@@ -42,9 +44,7 @@ public class CourseService {
                 .toList();
     }
 
-    public CourseDescriptionResultDto getCourse(int id)
-    {
-
+    public CourseDescriptionResultDto getCourse(int id) {
         DistinctCourse course = distinctCourseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
@@ -58,7 +58,6 @@ public class CourseService {
                 course.getSectionCreditHours(),
                 gpaHistory,
                 teacherInformation
-
         );
     }
 
@@ -106,7 +105,8 @@ public class CourseService {
                         i -> new TeacherInformationDto(
                                 i.getName(),
                                 i.getTimesExcellent(),
-                                i.getTimesOutstanding()
+                                i.getTimesOutstanding(),
+                                rateMyProfessorService.getProfessor(i.getName())
                         ),
                         (a, b) -> a
                 ))
