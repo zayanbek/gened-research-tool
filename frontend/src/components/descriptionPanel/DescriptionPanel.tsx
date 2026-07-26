@@ -97,38 +97,7 @@ export default function DescriptionPanel({
           )}
 
           {course.teacherInformation.length > 0 && (
-            <>
-              <label>Teacher Information</label>
-
-              <table className="teacher-table">
-                <thead>
-                  <tr>
-                    <th>Instructor</th>
-                    <th>Outstanding</th>
-                    <th>Excellent</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {[...course.teacherInformation]
-                    .sort(
-                      (a, b) =>
-                        b.outstanding +
-                        b.excellent -
-                        (a.outstanding + a.excellent),
-                    )
-                    .map((teacher) => (
-                      <tr key={teacher.name}>
-                        <td>{teacher.name}</td>
-                        <td>{teacher.outstanding}</td>
-                        <td>{teacher.excellent}</td>
-                        <td>{teacher.outstanding + teacher.excellent}</td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </>
+            
           )}
         </aside>
       ) : (
