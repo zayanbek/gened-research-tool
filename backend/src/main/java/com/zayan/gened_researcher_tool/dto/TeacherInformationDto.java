@@ -5,14 +5,16 @@ public class TeacherInformationDto {
     private String name;
     private int excellent;
     private int outstanding;
+    private RateMyProfessorDto rateMyProfessor;
 
     public TeacherInformationDto() {
     }
 
-    public TeacherInformationDto(String name, int excellent, int outstanding) {
+    public TeacherInformationDto(String name, int excellent, int outstanding, RateMyProfessorDto rateMyProfessor) {
         this.name = name;
         this.excellent = excellent;
         this.outstanding = outstanding;
+        this.rateMyProfessor = rateMyProfessor;
     }
 
     public String getName() {
@@ -37,6 +39,14 @@ public class TeacherInformationDto {
 
     public void setOutstanding(int outstanding) {
         this.outstanding = outstanding;
+    }
+
+    public RateMyProfessorDto getRateMyProfessor() {
+        return rateMyProfessor;
+    }
+
+    public void setRateMyProfessor(RateMyProfessorDto rateMyProfessor) {
+        this.rateMyProfessor = rateMyProfessor;
     }
 }
 
