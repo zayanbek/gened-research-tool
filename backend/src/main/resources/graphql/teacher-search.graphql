@@ -1,0 +1,29 @@
+query TeacherSearchResultsPageQuery(
+  $query: TeacherSearchQuery!
+  $schoolID: ID
+  $includeSchoolFilter: Boolean!
+) {
+  search: newSearch {
+    teachers(query: $query, first: 8, after: "") {
+      edges {
+        node {
+          firstName
+          lastName
+          avgRating
+          avgDifficulty
+          wouldTakeAgainPercent
+          numRatings
+          department
+          legacyId
+          school {
+            name
+          }
+        }
+      }
+    }
+  }
+
+  school: node(id: $schoolID) @include(if: $includeSchoolFilter) {
+    id
+  }
+}
