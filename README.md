@@ -9,7 +9,13 @@ A web application that helps students search, filter, and explore University of 
   - Course number
   - Subject
 - Filter courses by General Education categories
-- View detailed course information
+- View detailed course information, including:
+  - Course Description
+  - Credit Hours
+  - Gpa History
+  - Teacher Information
+- View instructor statistics from the [Teachers Ranked as Excellent Dataset](https://citl.illinois.edu/teachers-ranked-excellent)
+- View instructor ratings from Rate My Professor GraphQL API
 - Fast search using backend filtering and database queries
 - Responsive React frontend
 
@@ -110,6 +116,7 @@ The frontend communicates with the backend using REST endpoints for retrieving:
 - Courses
 - Filtered search results
 - Subject descriptions, credit hours, and gpa history
+- Instructor ratings and statistics
 
 Course searches support combinations of filters, including:
 
@@ -142,8 +149,6 @@ The repository includes:
 ## Future Improvements
 
 - Authentication
-- Class description
-- Instructor information
 - Semester availability
 - Advanced sorting
 - Favorite courses
