@@ -6,6 +6,7 @@ import { getCourseDescription } from "../../api/courses";
 
 import type { CourseDescriptionSearchResult } from "../../types/CourseDescriptionSearchResult";
 import GpaHistoryChart from "./gpaHistoryChart/GpaHistoryChart";
+import TeacherInformationCard from "../teacherInformationCard/TeacherInformationCard";
 
 type CourseDescriptionPanelProps = {
   courseId: number | null;
@@ -97,7 +98,17 @@ export default function DescriptionPanel({
           )}
 
           {course.teacherInformation.length > 0 && (
-            
+            <>
+              <label>Teacher Information</label>
+              <div className="teacher-information-list">
+                {course.teacherInformation.map((teacher) => (
+                  <TeacherInformationCard
+                    key={teacher.name}
+                    teacher={teacher}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </aside>
       ) : (
