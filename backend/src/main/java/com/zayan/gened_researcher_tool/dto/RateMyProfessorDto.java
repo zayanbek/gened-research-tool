@@ -26,7 +26,7 @@ public class RateMyProfessorDto {
         this.numRatings = numRatings;
         this.wouldTakeAgainPercent = wouldTakeAgainPercent;
         this.department = department;
-        this.link = link;     
+        this.link = link;
     }
 
     public static RateMyProfessorDto empty(String instructorName) {
