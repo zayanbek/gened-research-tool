@@ -19,7 +19,7 @@ public class RateMyProfessorService {
 
      private final String API_LINK = "https://www.ratemyprofessors.com/graphql";
 
-     private static final String SCHOOL_NAME = "University of Illinois Urbana-Champaign";
+     // private static final String SCHOOL_NAME = "University of Illinois Urbana-Champaign";
 
      private RestClient restClient = RestClient.create();
 
@@ -42,14 +42,26 @@ public class RateMyProfessorService {
                   StandardCharsets.UTF_8
           );
 
-          schoolId = searchSchoolId(SCHOOL_NAME);
+          // schoolId = searchSchoolId(SCHOOL_NAME);
+          schoolId = "U2Nob29sLTExMTI="; // School ID for UIUC
      }
 
      @Cacheable("rmp")
      public RateMyProfessorDto getProfessor(String instructorName) {
 
+          String[] nameParts = instructorName.split(",", 2);
+
+          String expectedLast = nameParts[0].trim();
+
+          String expectedFirst = "";
+          if (nameParts.length > 1) {
+               expectedFirst = nameParts[1].trim().split("\\s+")[0];
+          }
+
+          // System.out.println("expected:" + expectedFirst + "|" + expectedLast);
+
           Map<String, Object> query = new HashMap<>();
-          query.put("text", instructorName);
+          query.put("text", expectedLast);
           query.put("schoolID", schoolId);
           query.put("fallback", true);
           query.put("departmentID", null);
@@ -70,18 +82,47 @@ public class RateMyProfessorService {
                   .retrieve()
                   .body(JsonNode.class);
 
+          // System.out.println("response: " + response.toPrettyString());
+
           JsonNode edges = response.path("data")
                   .path("search")
                   .path("teachers")
                   .path("edges");
 
-          // System.out.println("\033[34m" + response.toPrettyString() + "\033[37m");
-
           if (!edges.isArray() || edges.isEmpty()) {
                return RateMyProfessorDto.empty(instructorName);
           }
 
-          JsonNode professor = edges.get(0).path("node");
+          // JsonNode professor = edges.get(0).path("node");
+
+          // System.out.println(instructorName + "|" + expectedFirst + "|" + expectedLast);
+
+          JsonNode professor = null;
+
+          // System.out.println("** instructorName:     " + instructorName);
+
+          for (JsonNode edge : edges) {
+
+               JsonNode node = edge.path("node");
+
+               String firstName = node.path("firstName").asText();
+               String lastName = node.path("lastName").asText();
+
+               System.out.println(firstName + "|" + lastName);
+
+               boolean firstMatches = firstName.equalsIgnoreCase(expectedFirst);
+               boolean lastMatches = lastName.equalsIgnoreCase(expectedLast);
+
+               if (firstMatches && lastMatches) {
+                    professor = node;
+                    break;
+               }
+          }
+
+          if (professor == null) {
+               return RateMyProfessorDto.empty(instructorName);
+          }
+
 
           return new RateMyProfessorDto(
                   professor.path("firstName").asText() + " "
@@ -114,10 +155,13 @@ public class RateMyProfessorService {
                   .retrieve()
                   .body(JsonNode.class);
 
+
           JsonNode edges = response.path("data")
                   .path("newSearch")
                   .path("schools")
                   .path("edges");
+
+          // for(JsonNode edge : edges) System.out.println(edge);
 
           if (!edges.isArray() || edges.isEmpty()) {
                return null;

@@ -4,7 +4,7 @@ query TeacherSearchResultsPageQuery(
   $includeSchoolFilter: Boolean!
 ) {
   search: newSearch {
-    teachers(query: $query, first: 8, after: "") {
+    teachers(query: $query, first: 20, after: "") {
       edges {
         node {
           firstName
