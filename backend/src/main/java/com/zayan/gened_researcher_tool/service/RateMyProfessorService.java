@@ -108,7 +108,7 @@ public class RateMyProfessorService {
                String firstName = node.path("firstName").asText();
                String lastName = node.path("lastName").asText();
 
-               System.out.println(firstName + "|" + lastName);
+               // System.out.println(firstName + "|" + lastName);
 
                boolean firstMatches = firstName.equalsIgnoreCase(expectedFirst);
                boolean lastMatches = lastName.equalsIgnoreCase(expectedLast);
