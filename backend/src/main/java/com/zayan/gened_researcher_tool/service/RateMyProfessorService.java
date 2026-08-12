@@ -91,8 +91,8 @@ public class RateMyProfessorService {
 
                JsonNode node = edge.path("node");
 
-               String firstName = node.path("firstName").asText();
-               String lastName = node.path("lastName").asText();
+               String firstName = node.path("firstName").asString();
+               String lastName = node.path("lastName").asString();
 
                boolean firstNameMatches = firstName.equalsIgnoreCase(instructorFirstName);
                boolean lastNameMatches = lastName.equalsIgnoreCase(instructorLastName);
@@ -107,7 +107,7 @@ public class RateMyProfessorService {
                return RateMyProfessorDto.empty(instructorFirstName + " " + instructorLastName);
           }
 
-          String assembledNamed = professor.path("firstName").asText() + " " + professor.path("lastName").asText();
+          String assembledNamed = professor.path("firstName").asString() + " " + professor.path("lastName").asString();
 
           return new RateMyProfessorDto(
                   assembledNamed,
@@ -115,9 +115,9 @@ public class RateMyProfessorService {
                   professor.path("avgDifficulty").asDouble(),
                   professor.path("numRatings").asInt(),
                   professor.path("wouldTakeAgainPercent").asDouble(),
-                  professor.path("department").asText(),
+                  professor.path("department").asString(),
                   "https://www.ratemyprofessors.com/professor/"
-                          + professor.path("legacyId").asText()
+                          + professor.path("legacyId").asString()
           );
      }
 
@@ -174,7 +174,7 @@ public class RateMyProfessorService {
           return edges.get(0)
                   .path("node")
                   .path("id")
-                  .asText();
+                  .asString();
      }
 
      private HttpHeaders headers() {
