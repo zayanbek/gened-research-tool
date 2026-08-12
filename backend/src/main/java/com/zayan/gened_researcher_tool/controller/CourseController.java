@@ -1,7 +1,6 @@
 package com.zayan.gened_researcher_tool.controller;
 
 import com.zayan.gened_researcher_tool.dto.CourseDescriptionResultDto;
-import com.zayan.gened_researcher_tool.dto.CourseDescriptionResultDto;
 import com.zayan.gened_researcher_tool.dto.CourseSearchRequestDto;
 import com.zayan.gened_researcher_tool.dto.CourseSearchResultDto;
 import com.zayan.gened_researcher_tool.service.CourseService;
