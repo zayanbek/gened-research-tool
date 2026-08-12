@@ -10,7 +10,7 @@ public class RateMyProfessorDto {
 
     private int numRatings;
 
-    private int wouldTakeAgainPercent;
+    private double wouldTakeAgainPercent;
 
     private String department;
 
@@ -19,7 +19,7 @@ public class RateMyProfessorDto {
     public RateMyProfessorDto() {
     }
 
-    public RateMyProfessorDto(String formattedName, double avgRating, double avgDifficulty, int numRatings, int wouldTakeAgainPercent, String department, String link) {
+    public RateMyProfessorDto(String formattedName, double avgRating, double avgDifficulty, int numRatings, double wouldTakeAgainPercent, String department, String link) {
         this.formattedName = formattedName;
         this.avgRating = avgRating;
         this.avgDifficulty = avgDifficulty;
@@ -32,10 +32,10 @@ public class RateMyProfessorDto {
     public static RateMyProfessorDto empty(String instructorName) {
         return new RateMyProfessorDto(
                 instructorName,
+                -1.0,
+                -1.0,
                 -1,
-                -1,
-                -1,
-                -1,
+                -1.0,
                 "-1",
                 "-1"
         );
@@ -73,11 +73,11 @@ public class RateMyProfessorDto {
         this.numRatings = numRatings;
     }
 
-    public int getWouldTakeAgainPercent() {
+    public double getWouldTakeAgainPercent() {
         return wouldTakeAgainPercent;
     }
 
-    public void setWouldTakeAgainPercent(int wouldTakeAgainPercent) {
+    public void setWouldTakeAgainPercent(double wouldTakeAgainPercent) {
         this.wouldTakeAgainPercent = wouldTakeAgainPercent;
     }
 
