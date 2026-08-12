@@ -53,8 +53,9 @@ export default function TeacherInformationCard({
           {rmp.wouldTakeAgainPercent != null && (
             <p>
               <strong>
-                {formatValue(rmp.wouldTakeAgainPercent)}
-                {rmp.wouldTakeAgainPercent !== -1 && "%"}
+                {rmp.wouldTakeAgainPercent !== -1
+                  ? `${rmp.wouldTakeAgainPercent.toFixed(1)}%`
+                  : "N/A"}
               </strong>{" "}
               Would Take Again
             </p>
