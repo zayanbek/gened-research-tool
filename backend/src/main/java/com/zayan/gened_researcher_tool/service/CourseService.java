@@ -7,6 +7,7 @@ import com.zayan.gened_researcher_tool.entity.DistinctCourse;
 import com.zayan.gened_researcher_tool.entity.CourseGenEd;
 
 import com.zayan.gened_researcher_tool.entity.Instructor;
+import com.zayan.gened_researcher_tool.exception.CourseNotFoundException;
 import com.zayan.gened_researcher_tool.repository.DistinctCourseRepository;
 
 import org.springframework.data.domain.Sort;
@@ -45,8 +46,13 @@ public class CourseService {
     }
 
     public CourseDescriptionResultDto getCourse(int id) {
+
+        if (id <= 0) {
+            throw new CourseNotFoundException("Course id must be greater than zero");
+        }
+
         DistinctCourse course = distinctCourseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+                .orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " not found"));
 
         List<GpaHistoryDto> gpaHistory = getSortedGpaHistory(course);
         List<TeacherInformationDto> teacherInformation = getSortedTeacherInformation(course);
