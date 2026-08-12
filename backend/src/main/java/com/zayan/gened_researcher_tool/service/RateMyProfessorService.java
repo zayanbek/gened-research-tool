@@ -106,8 +106,6 @@ public class RateMyProfessorService {
                return RateMyProfessorDto.empty(instructorFirstName + " " + instructorLastName);
           }
 
-          System.out.println(professor.toPrettyString());
-
           String assembledNamed = professor.path("firstName").asText() + " " + professor.path("lastName").asText();
 
           return new RateMyProfessorDto(
