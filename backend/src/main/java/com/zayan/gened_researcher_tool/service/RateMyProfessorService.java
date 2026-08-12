@@ -49,19 +49,12 @@ public class RateMyProfessorService {
      @Cacheable("rmp")
      public RateMyProfessorDto getProfessor(String instructorName) {
 
-          String[] nameParts = instructorName.split(",", 2);
-
-          String expectedLast = nameParts[0].trim();
-
-          String expectedFirst = "";
-          if (nameParts.length > 1) {
-               expectedFirst = nameParts[1].trim().split("\\s+")[0];
-          }
-
-          // System.out.println("expected:" + expectedFirst + "|" + expectedLast);
+          // input name should be in the format "last, first"
+          String[] name = processName(instructorName);
+          String instructorFirstName = name[0], instructorLastName = name[1];
 
           Map<String, Object> query = new HashMap<>();
-          query.put("text", expectedLast);
+          query.put("text", instructorLastName);
           query.put("schoolID", schoolId);
           query.put("fallback", true);
           query.put("departmentID", null);
@@ -82,8 +75,6 @@ public class RateMyProfessorService {
                   .retrieve()
                   .body(JsonNode.class);
 
-          // System.out.println("response: " + response.toPrettyString());
-
           JsonNode edges = response.path("data")
                   .path("search")
                   .path("teachers")
@@ -93,13 +84,7 @@ public class RateMyProfessorService {
                return RateMyProfessorDto.empty(instructorName);
           }
 
-          // JsonNode professor = edges.get(0).path("node");
-
-          // System.out.println(instructorName + "|" + expectedFirst + "|" + expectedLast);
-
           JsonNode professor = null;
-
-          // System.out.println("** instructorName:     " + instructorName);
 
           for (JsonNode edge : edges) {
 
@@ -108,33 +93,51 @@ public class RateMyProfessorService {
                String firstName = node.path("firstName").asText();
                String lastName = node.path("lastName").asText();
 
-               // System.out.println(firstName + "|" + lastName);
+               boolean firstNameMatches = firstName.equalsIgnoreCase(instructorFirstName);
+               boolean lastNameMatches = lastName.equalsIgnoreCase(instructorLastName);
 
-               boolean firstMatches = firstName.equalsIgnoreCase(expectedFirst);
-               boolean lastMatches = lastName.equalsIgnoreCase(expectedLast);
-
-               if (firstMatches && lastMatches) {
+               if (firstNameMatches && lastNameMatches) {
                     professor = node;
                     break;
                }
           }
 
           if (professor == null) {
-               return RateMyProfessorDto.empty(instructorName);
+               return RateMyProfessorDto.empty(instructorFirstName + " " + instructorLastName);
           }
 
+          System.out.println(professor.toPrettyString());
+
+          String assembledNamed = professor.path("firstName").asText() + " " + professor.path("lastName").asText();
 
           return new RateMyProfessorDto(
-                  professor.path("firstName").asText() + " "
-                          + professor.path("lastName").asText(),
+                  assembledNamed,
                   professor.path("avgRating").asDouble(),
                   professor.path("avgDifficulty").asDouble(),
-                  professor.path("wouldTakeAgainPercent").asInt(),
                   professor.path("numRatings").asInt(),
+                  professor.path("wouldTakeAgainPercent").asDouble(),
                   professor.path("department").asText(),
                   "https://www.ratemyprofessors.com/professor/"
                           + professor.path("legacyId").asText()
           );
+     }
+
+     // Splits names from "Last, First" -> ["First","Last"]
+     private String[] processName(String instructorName) {
+
+          String[] nameParts = instructorName.split(",", 2);
+
+          String expectedLast = nameParts[0].trim();
+
+          String expectedFirst = "";
+          if (nameParts.length > 1) {
+               expectedFirst = nameParts[1].trim().split("\\s+")[0];
+          } else {
+               // TODO: give 400 Bad Request error message
+               System.out.println("name is short");
+          }
+
+          return new String[]{expectedFirst, expectedLast};
      }
 
      private String searchSchoolId(String schoolName) {
