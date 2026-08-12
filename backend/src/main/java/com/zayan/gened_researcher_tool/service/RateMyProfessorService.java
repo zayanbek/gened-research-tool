@@ -1,6 +1,7 @@
 package com.zayan.gened_researcher_tool.service;
 
 import com.zayan.gened_researcher_tool.dto.RateMyProfessorDto;
+import com.zayan.gened_researcher_tool.exception.InvalidTeacherNameException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
@@ -125,15 +126,17 @@ public class RateMyProfessorService {
 
           String[] nameParts = instructorName.split(",", 2);
 
-          String expectedLast = nameParts[0].trim();
-
-          String expectedFirst = "";
-          if (nameParts.length > 1) {
-               expectedFirst = nameParts[1].trim().split("\\s+")[0];
-          } else {
-               // TODO: give 400 Bad Request error message
-               System.out.println("name is short");
+          if (nameParts.length < 2 ||
+                  nameParts[0].trim().isEmpty() ||
+                  nameParts[1].trim().isEmpty()
+          ) {
+               throw new InvalidTeacherNameException(
+                       "Instructor name must be in the format 'Last, First'"
+               );
           }
+
+          String expectedFirst = nameParts[1].trim().split("\\s+")[0];
+          String expectedLast = nameParts[0].trim();
 
           return new String[]{expectedFirst, expectedLast};
      }
