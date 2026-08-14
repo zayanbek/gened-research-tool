@@ -1,5 +1,7 @@
 package com.zayan.gened_researcher_tool.dto;
 
+import com.zayan.gened_researcher_tool.entity.DistinctCourse;
+
 import java.util.List;
 
 public class CourseDescriptionResultDto {
@@ -21,6 +23,16 @@ public class CourseDescriptionResultDto {
         this.sectionInfo = sectionInfo;
         this.sectionTitle = sectionTitle;
         this.sectionCreditHours = sectionCreditHours;
+        this.gpaHistory = gpaHistory;
+        this.teacherInformation = teacherInformation;
+    }
+
+    public CourseDescriptionResultDto(DistinctCourse course, List<GpaHistoryDto> gpaHistory, List<TeacherInformationDto> teacherInformation) {
+        this.description = course.getDescription();
+        this.creditHours = course.getCreditHours();
+        this.sectionInfo = course.getSectionInfo();
+        this.sectionTitle = course.getSectionTitle();
+        this.sectionCreditHours = course.getSectionCreditHours();
         this.gpaHistory = gpaHistory;
         this.teacherInformation = teacherInformation;
     }
