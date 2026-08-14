@@ -108,16 +108,7 @@ public class RateMyProfessorService {
 
           String assembledNamed = professor.path("firstName").asText() + " " + professor.path("lastName").asText();
 
-          return new RateMyProfessorDto(
-                  assembledNamed,
-                  professor.path("avgRating").asDouble(),
-                  professor.path("avgDifficulty").asDouble(),
-                  professor.path("numRatings").asInt(),
-                  professor.path("wouldTakeAgainPercent").asDouble(),
-                  professor.path("department").asText(),
-                  "https://www.ratemyprofessors.com/professor/"
-                          + professor.path("legacyId").asText()
-          );
+          return new RateMyProfessorDto(professor);
      }
 
      // Splits names from "Last, First" -> ["First","Last"]
