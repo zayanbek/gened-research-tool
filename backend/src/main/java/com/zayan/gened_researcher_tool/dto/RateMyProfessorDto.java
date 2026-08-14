@@ -1,5 +1,8 @@
 package com.zayan.gened_researcher_tool.dto;
 
+import org.springframework.boot.jackson.autoconfigure.JacksonProperties;
+import tools.jackson.databind.JsonNode;
+
 public class RateMyProfessorDto {
 
     private String formattedName;
@@ -27,6 +30,17 @@ public class RateMyProfessorDto {
         this.wouldTakeAgainPercent = wouldTakeAgainPercent;
         this.department = department;
         this.link = link;
+    }
+
+    public RateMyProfessorDto(JsonNode professor) {
+        this.formattedName = professor.path("firstName").asText() + " " + professor.path("lastName").asText();
+        this.avgRating = professor.path("avgRating").asDouble();
+        this.avgDifficulty = professor.path("avgDifficulty").asDouble();
+        this.numRatings = professor.path("numRatings").asInt();
+        this.wouldTakeAgainPercent = professor.path("wouldTakeAgainPercent").asDouble();
+        this.department = professor.path("department").asText();
+        this.link = "https://www.ratemyprofessors.com/professor/"
+                + professor.path("legacyId").asText();
     }
 
     public static RateMyProfessorDto empty(String instructorName) {
