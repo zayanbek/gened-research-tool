@@ -107,8 +107,6 @@ public class RateMyProfessorService {
                return RateMyProfessorDto.empty(instructorFirstName + " " + instructorLastName);
           }
 
-          String assembledNamed = professor.path("firstName").asString() + " " + professor.path("lastName").asString();
-
           return new RateMyProfessorDto(professor);
      }
 
