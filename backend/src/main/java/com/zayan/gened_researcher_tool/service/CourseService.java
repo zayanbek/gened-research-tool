@@ -48,17 +48,12 @@ public class CourseService {
         DistinctCourse course = distinctCourseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        List<GpaHistoryDto> gpaHistory = getSortedGpaHistory(course);
-        List<TeacherInformationDto> teacherInformation = getSortedTeacherInformation(course);
         return new CourseDescriptionResultDto(
-                course.getDescription(),
-                course.getCreditHours(),
-                course.getSectionInfo(),
-                course.getSectionTitle(),
-                course.getSectionCreditHours(),
-                gpaHistory,
-                teacherInformation
+                course,
+                getSortedGpaHistory(course),
+                getSortedTeacherInformation(course)
         );
+
     }
 
     private List<GpaHistoryDto> getSortedGpaHistory(DistinctCourse course) {
